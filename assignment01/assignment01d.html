@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking Form</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('https://source.unsplash.com/1600x900/?hotel,interior');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 20px;
+            transition: all 0.3s ease;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 26px;
+            color: #003580;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        select,
+        input:focus,
+        textarea:focus {
+            border-color: #0071c2;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #0071c2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #005da0;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            button {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Book Your Stay</h2>
+    <form id="customerForm" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter full name">
+            <div id="nameError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" placeholder="Enter your address"></textarea>
+            <div id="addressError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" placeholder="Enter your age">
+            <div id="ageError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <div class="radio-group">
+                <label><input type="radio" id="male" name="gender" value="Male"> Male</label>
+                <label><input type="radio" id="female" name="gender" value="Female"> Female</label>
+            </div>
+            <div id="genderError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="roomType">Room Type:</label>
+            <select id="roomType" name="roomType">
+                <option value="">Select Room Type</option>
+                <option value="AC">A/C</option>
+                <option value="Non-AC">Non A/C</option>
+                <option value="Deluxe">Deluxe</option>
+            </select>
+            <div id="roomTypeError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="paymentType">Payment Type:</label>
+            <select id="paymentType" name="paymentType">
+                <option value="">Select Payment Type</option>
+                <option value="Cash">Cash</option>
+                <option value="Card">Credit/Debit Card</option>
+                <option value="Coupons">Coupons</option>
+            </select>
+            <div id="paymentTypeError" class="error"></div>
+        </div>
+
+        <button type="submit">Book Now</button>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        let isValid = true;
+
+        // Clear previous error messages
+        document.getElementById("nameError").textContent = "";
+        document.getElementById("addressError").textContent = "";
+        document.getElementById("ageError").textContent = "";
+        document.getElementById("genderError").textContent = "";
+        document.getElementById("roomTypeError").textContent = "";
+        document.getElementById("paymentTypeError").textContent = "";
+
+        // Validate Name
+        const name = document.getElementById("name").value;
+        if (name === "") {
+            document.getElementById("nameError").textContent = "Name is required.";
+            isValid = false;
+        }
+
+        // Validate Address
+        const address = document.getElementById("address").value;
+        if (address === "") {
+            document.getElementById("addressError").textContent = "Address is required.";
+            isValid = false;
+        }
+
+        // Validate Age
+        const age = document.getElementById("age").value;
+        if (age === "" || isNaN(age) || age <= 0) {
+            document.getElementById("ageError").textContent = "Please enter a valid age.";
+            isValid = false;
+        }
+
+        // Validate Gender
+        const gender = document.querySelector('input[name="gender"]:checked');
+        if (!gender) {
+            document.getElementById("genderError").textContent = "Please select a gender.";
+            isValid = false;
+        }
+
+        // Validate Room Type
+        const roomType = document.getElementById("roomType").value;
+        if (roomType === "") {
+            document.getElementById("roomTypeError").textContent = "Please select a room type.";
+            isValid = false;
+        }
+
+        // Validate Payment Type
+        const paymentType = document.getElementById("paymentType").value;
+        if (paymentType === "") {
+            document.getElementById("paymentTypeError").textContent = "Please select a payment type.";
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
+
+</body>
+</html>
